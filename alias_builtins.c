@@ -147,6 +147,5 @@ char **replace_aliases(char **args)
 			temp = temp->next;
 		}
 	}
-
 	return (args);
 }

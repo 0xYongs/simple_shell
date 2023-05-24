@@ -1,10 +1,10 @@
 #include "shell.h"
-​
+
 void free_args(char **args, char **front);
 char *get_pid(void);
 char *get_env_value(char *beginning, int len);
 void variable_replacement(char **args, int *exe_ret);
-​
+
 /**
  * free_args - Frees up memory taken by args.
  * @args: A null-terminated double pointer containing commands/arguments.
@@ -13,13 +13,13 @@ void variable_replacement(char **args, int *exe_ret);
 void free_args(char **args, char **front)
 {
 	size_t i;
-​
+
 	for (i = 0; args[i] || args[i + 1]; i++)
 		free(args[i]);
-​
+
 	free(front);
 }
-​
+
 /**
  * get_pid - Gets the current process ID.
  * Description: Opens the stat file, a space-delimited file containing
@@ -34,7 +34,7 @@ char *get_pid(void)
 	size_t i = 0;
 	char *buffer;
 	ssize_t file;
-​
+
 	file = open("/proc/self/stat", O_RDONLY);
 	if (file == -1)
 	{
@@ -51,11 +51,11 @@ char *get_pid(void)
 	while (buffer[i] != ' ')
 		i++;
 	buffer[i] = '\0';
-​
+
 	close(file);
 	return (buffer);
 }
-​
+
 /**
  * get_env_value - Gets the value corresponding to an environmental variable.
  * @beginning: The environmental variable to search for.
@@ -70,13 +70,13 @@ char *get_env_value(char *beginning, int len)
 {
 	char **var_addr;
 	char *replacement = NULL, *temp, *var;
-​
+
 	var = malloc(len + 1);
 	if (!var)
 		return (NULL);
 	var[0] = '\0';
 	_strncat(var, beginning, len);
-​
+
 	var_addr = _getenv(var);
 	free(var);
 	if (var_addr)
@@ -89,10 +89,10 @@ char *get_env_value(char *beginning, int len)
 		if (replacement)
 			_strcpy(replacement, temp);
 	}
-​
+
 	return (replacement);
 }
-​
+
 /**
  * variable_replacement - Handles variable replacement.
  * @line: A double pointer containing the command and arguments.
@@ -106,7 +106,7 @@ void variable_replacement(char **line, int *exe_ret)
 {
 	int j, k = 0, len;
 	char *replacement = NULL, *old_line = NULL, *new_line;
-​
+
 	old_line = *line;
 	for (j = 0; old_line[j]; j++)
 	{

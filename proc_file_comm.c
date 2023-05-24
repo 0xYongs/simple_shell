@@ -1,8 +1,8 @@
 #include "shell.h"
-​
+
 int cant_open(char *file_path);
 int proc_file_commands(char *file_path, int *exe_ret);
-​
+
 /**
  * cant_open - If the file doesn't exist or lacks proper permissions, print
  * a cant open error.
@@ -10,16 +10,16 @@ int proc_file_commands(char *file_path, int *exe_ret);
  *
  * Return: 127.
  */
-​
+
 int cant_open(char *file_path)
 {
 	char *error, *hist_str;
 	int len;
-​
+
 	hist_str = _itoa(hist);
 	if (!hist_str)
 		return (127);
-​
+
 	len = _strlen(name) + _strlen(hist_str) + _strlen(file_path) + 16;
 	error = malloc(sizeof(char) * (len + 1));
 	if (!error)
@@ -27,20 +27,20 @@ int cant_open(char *file_path)
 		free(hist_str);
 		return (127);
 	}
-​
+
 	_strcpy(error, name);
 	_strcat(error, ": ");
 	_strcat(error, hist_str);
 	_strcat(error, ": Can't open ");
 	_strcat(error, file_path);
 	_strcat(error, "\n");
-​
+
 	free(hist_str);
 	write(STDERR_FILENO, error, len);
 	free(error);
 	return (127);
 }
-​
+
 /**
  * proc_file_commands - Takes a file and attempts to run the commands stored
  * within.
@@ -59,7 +59,7 @@ int proc_file_commands(char *file_path, int *exe_ret)
 	char *line, **args, **front;
 	char buffer[120];
 	int ret;
-​
+
 	hist = 0;
 	file = open(file_path, O_RDONLY);
 	if (file == -1)
@@ -104,7 +104,7 @@ int proc_file_commands(char *file_path, int *exe_ret)
 		return (*exe_ret);
 	}
 	front = args;
-​
+
 	for (i = 0; args[i]; i++)
 	{
 		if (_strncmp(args[i], ";", 1) == 0)
@@ -116,9 +116,9 @@ int proc_file_commands(char *file_path, int *exe_ret)
 			i = 0;
 		}
 	}
-​
+
 	ret = call_args(args, front, exe_ret);
-​
+
 	free(front);
 	return (ret);
 }
